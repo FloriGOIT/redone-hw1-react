@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import style from "./feedback.module.scss";
 import PropTypes from "prop-types";
 
@@ -8,16 +8,13 @@ function Feedback() {
    const [bad, setBad] = useState(0);
    const [good, setGood] = useState(0);
    const [neutral, setNeutral] = useState(0);
-   const [total, setTotal] = useState(0);
+   let total = good + bad + neutral;
+   let percentage = (good / total * 100).toFixed(2);
+
    const handleGood = () => { setGood(prev => prev + 1) }
    const handleBad = () => { setBad(prev => prev + 1) }
    const handleNeutral = () => { setNeutral(prev => prev + 1) }
-   let percentage = (good / total *100).toFixed(2)
-   
-   useEffect(() => {
-      setTotal(bad + good + neutral);
-   }, [bad, good, neutral])
-   
+     
 
    return (<section className={style.feedback}>
       <h3>Please leave feedback</h3>

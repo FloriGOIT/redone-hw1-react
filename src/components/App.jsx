@@ -1,6 +1,6 @@
 import Profile from './home-work-1/Profile/Profile';
 import user from './home-work-1/Profile/user.json';
-import me from './Profile/WhatsApp Image 2025-06-01 at 20.27.49.jpeg';
+import me from '../components/home-work-1/Profile/WhatsApp Image 2025-06-01 at 20.27.49.jpeg';
 
 import Stats from './home-work-1/Stats/Stats';
 import statistics from "./home-work-1/Stats/statistics.json";
