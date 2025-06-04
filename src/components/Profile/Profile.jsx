@@ -15,7 +15,7 @@ function Profile({ username, tag, me, location, stats }) {
         </div>
         <div className={style.statsInfo}>
           <div className={style.stats}>
-            <p >Income</p>
+            <p >Net income</p>
             <span >{stats.income}</span>
           </div>
           <div className={style.stats}>
