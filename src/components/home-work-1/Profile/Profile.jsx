@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 function Profile({ username, tag, me, location, stats }) {
   return (
     <>
-      <section> 
+      <section className={style.profileAll}> 
         <h2>Achievement</h2>
         <div className={style.userInfo}>
           <img src={me} alt={username} width={100} />
@@ -16,7 +16,7 @@ function Profile({ username, tag, me, location, stats }) {
         <div className={style.statsInfo}>
           <div className={style.stats}>
             <p >Net income</p>
-            <span >{stats.income}</span>
+            <span >↗️{stats.income}</span>
           </div>
           <div className={style.stats}>
             <p>Currency</p>
