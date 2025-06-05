@@ -13,6 +13,8 @@ import data from "./home-work-1/MyBankAccount/transactions.json"
 
 import Feedback from './home-work-2/Feedback/Feedback';
 
+import Test from './test/Test';
+
 
 function App() {
   const { username, tag, location, stats } = user;
@@ -20,6 +22,8 @@ function App() {
   return (
     <>
       <h1>React homework redone</h1>
+      <Test/>
+      <hr/><br/>
       <Feedback />
       <hr/><br/>
       <Profile
