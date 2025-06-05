@@ -13,16 +13,24 @@ import data from "./home-work-1/MyBankAccount/transactions.json"
 
 import Feedback from './home-work-2/Feedback/Feedback';
 
-import Test from './test/Test';
+import CarTest from './test/Test';
+import SignUpForm from './test/Test1';
+import { useState } from 'react';
 
 
 function App() {
   const { username, tag, location, stats } = user;
-
+  const[dataForm, setDataForm] = useState("")
+  const handleData = value => { setDataForm(value);  console.log("dataForm",dataForm)}
   return (
     <>
       <h1>React homework redone</h1>
-      <Test/>
+      <p>Form values are: {dataForm}</p>
+      <SignUpForm onSubmit={handleData} />
+      <hr/><br/>
+      <CarTest owner="Alice" />
+      <CarTest owner="Dana" />
+      <CarTest owner="Flori" />
       <hr/><br/>
       <Feedback />
       <hr/><br/>
