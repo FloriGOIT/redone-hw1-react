@@ -11,7 +11,7 @@ import friends from "./home-work-1/FriendsProfile/friends.json";
 import Transactions from './home-work-1/MyBankAccount/Transactions.jsx';
 import data from "./home-work-1/MyBankAccount/transactions.json"
 
-import Feedback from './home-work-2/Feedback/Feedback';
+import Feedback from './home-work-2/Feedback/Feedback'; 
 
 import CarTest from './test/Test';
 import SignUpForm from './test/Test1';
@@ -25,14 +25,17 @@ function App() {
   return (
     <>
       <h1>React homework redone</h1>
+      <div style={{borderWidth: 3, borderColor:'brown', borderStyle:'solid', padding: 15}}>
+      <Feedback />
+      <hr /><hr /><br />      
+      <div><b style={{fontWeight:800, fontSize:18, color:'brown'}}>TEST</b>
       <p>Form values are: {dataForm}</p>
       <SignUpForm onSubmit={handleData} />
-      <hr/><br/>
+      </div>
+      <hr/><hr/><br/>
       <CarTest owner="Alice" />
       <CarTest owner="Dana" />
       <CarTest owner="Flori" />
-      <hr/><br/>
-      <Feedback />
       <hr/><br/>
       <Profile
         username={username}
@@ -47,6 +50,8 @@ function App() {
       <FriendList friendsList={friends} />
       <hr /><br />
       <Transactions data={data} />
+      </div>
+      
     </>
   );
 }
