@@ -1,4 +1,3 @@
-h2{background: linear-gradient(to right,yellow, rgb(103, 231, 18), rgb(7, 184, 7), blue, purple);}
 .profileAll {
   background-color: rgba(128, 128, 128, 0.329);
   padding: 20px;
@@ -6,7 +5,9 @@ h2{background: linear-gradient(to right,yellow, rgb(103, 231, 18), rgb(7, 184, 7
   width: 400px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.514);
   border-radius: 5px;
-
+  h2 {
+      background: linear-gradient(to right, yellow, rgb(103, 231, 18), rgb(7, 184, 7), blue, purple);
+    }
   > div {
     display: flex;
     gap: 15px;
