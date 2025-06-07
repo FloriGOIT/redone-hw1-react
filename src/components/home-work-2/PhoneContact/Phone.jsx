@@ -1,52 +1,79 @@
 import React from 'react';
+import style from './phone.module.scss';
+import PropTypes from 'prop-types';
 
 class Phone extends React.Component {
-  state = { contactState: '', phoneState: '' };
-  setContactState = contactInput =>
-    this.setState({ contactState: contactInput });
-  setPhoneState = phoneInput => {this.setState({ phoneState: phoneInput });console.log(this.state)}
-  componentDidUpdate(prevProps, prevState){if(prevState.state !== this.state){this.props.setContacts({id:"next", ...this.state})}}
+  state = { name: '', number: '' };
+  setname = contactInput => this.setState({ name: contactInput });
+  setnumber = phoneInput => {
+    this.setState({ number: phoneInput });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState !== this.state) {
+      this.props.setContacts([
+        ...this.props.contacts,
+        { id: `id-${Date.now()}`, ...this.state },
+      ]);
+    }
+  }
 
   render() {
-    const { contacts, setContacts, filter, setFilter } = this.props;
+    console.log(Date.now());
     return (
-      <div>
+      <div className={style.phoneAll}>
         <h1>PhoneBook</h1>
         <ContactForm
-          setContactState={this.setContactState}
-          setPhoneState={this.setPhoneState}
+          setname={this.setname}
+          setnumber={this.setnumber}
+          contacts={this.props.contacts}
         />
-        {this.state.contactState !== "" ? <p>
-          {this.state.contactState} : {this.state.phoneState} was last added in your
-          phonebook
-        </p>:null}
-
+        {this.state.name !== '' ? (
+          <p>
+            {this.state.name} : {this.state.number} was last added in your
+            phonebook
+          </p>
+        ) : null}
+        <br />
+        <br />
         <h2>Contacts</h2>
-        <Filter
-          contacts={contacts}
-          setContacts={setContacts}
-          filter={filter}
-          setFilter={setFilter}
+        <Filter filter={this.props.filter} setFilter={this.props.setFilter} />
+        <br />
+        <br />
+        <ContactList
+          contacts={this.props.contacts}
+          handleDeleteContact={this.props.handleDeleteContact}
+          filter={this.props.filter}
         />
-        <ContactList contacts={contacts} />
       </div>
     );
   }
 }
 
+export default Phone;
+
 class ContactForm extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
+    const { contacts } = this.props;
     const nameInput = event.target.elements.nameUser.value;
     const phoneInput = event.target.elements.phoneUser.value;
-          this.props.setContactState(nameInput);
-          this.props.setPhoneState(phoneInput)
+    const includes = contacts.some(
+      contact => contact.name === nameInput || contact.number === phoneInput
+    );
+    if (includes) {
+      alert('The name or phonenumber is already in your contact.');
+      return;
+    }
+    this.props.setname(nameInput);
+    this.props.setnumber(phoneInput);
+    event.target.reset();
   };
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label htmlFor="userName"></label>
+        <label htmlFor="userName">Name </label>
         <input
           type="text"
           id="userName"
@@ -55,7 +82,8 @@ class ContactForm extends React.Component {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan."
           required
         />
-        <label htmlFor="userPhone"></label>
+        <br />
+        <label htmlFor="userPhone">Phone </label>
         <input
           type="tel"
           id="userPhone"
@@ -64,24 +92,70 @@ class ContactForm extends React.Component {
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
         />
+        <br />
         <button type="submit">Add new contact</button>
       </form>
     );
   }
 }
+
 class Filter extends React.Component {
+  handleInputChange = event => {
+    let input = event.target.value;
+    this.props.setFilter(input);
+  };
   render() {
-    return <p>Filter</p>;
+    //const { filter, setFilter } = this.props;
+
+    return (
+      <input type="text" name="filterInput" onChange={this.handleInputChange} />
+    );
   }
 }
 
 class ContactList extends React.Component {
   render() {
-    return <p>ContactList</p>;
+    const { contacts, filter } = this.props;
+    const filteredContacts = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+    let list =
+      filteredContacts.length > 0 || filter !== ''
+        ? filteredContacts
+        : contacts;
+
+    console.log('list', list);
+
+    return (
+      <ul className={style.contacts}>
+        {list.map(contact => (
+          <li key={contact.id} id={contact.id}>
+            <span>
+              {contact.name}: {contact.number}
+            </span>
+            <button
+              type="button"
+              onClick={() => this.props.handleDeleteContact(contact.id)}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    );
   }
 }
 
-export default Phone;
+/*         
+              
+*/
+Phone.propTypes = {
+  contacts: PropTypes.arrayOf(PropTypes.shape({id:PropTypes.string, name:PropTypes.string, number:PropTypes.string})),
+  setContacts: PropTypes.func,
+  filter: PropTypes.string,
+  setFilter: PropTypes.func,
+  handleDeleteContact: PropTypes.func,
+};
+Filter.propTypes = { filter: PropTypes.string, setFilter: PropTypes.func }
+ContactList.propTypes={filter:PropTypes.string, contacts:PropTypes.array, handleDeleteContact:PropTypes.func}
 
-
-/*       */
