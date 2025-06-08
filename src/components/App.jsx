@@ -20,6 +20,8 @@ import { useState } from 'react';
 import Phone from './home-work-2/PhoneContact/Phone';
 import Phone2nd from './home-work-2/PhoneContact/Phone2nd';
 
+import { ErrorBoundary, BuggyComponent } from './test/ErrorHandeling';
+
 function App() {
   const { username, tag, location, stats } = user;
   const [dataForm, setDataForm] = useState('');
@@ -60,6 +62,9 @@ function App() {
           padding: 15,
         }}
       >
+        <ErrorBoundary>
+          <BuggyComponent />
+        </ErrorBoundary>
         <Phone2nd
           handleSetArrContacts={handleSetArrContacts}
           arrContacts={arrContacts}
