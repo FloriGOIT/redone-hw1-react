@@ -43,8 +43,11 @@ function App() {
   ]);
   const [filterContacts, setFilterContacts] = useState('');
 
-  const handleSetArrContacts = input => setArrContacts([...arrContacts, input])
- 
+  const handleSetArrContacts = input => setArrContacts([...arrContacts, input]);
+  const handleInputFilter = input => setFilterContacts(input);
+  const handleDeleteArrContacts = id => {
+    setArrContacts([...arrContacts.filter(contact => contact.id !== id)]);
+  };
 
   return (
     <>
@@ -57,7 +60,13 @@ function App() {
           padding: 15,
         }}
       >
-        <Phone2nd handleSetArrContacts={handleSetArrContacts} />
+        <Phone2nd
+          handleSetArrContacts={handleSetArrContacts}
+          arrContacts={arrContacts}
+          filterContacts={filterContacts}
+          handleInputFilter={handleInputFilter}
+          handleDeleteArrContacts={handleDeleteArrContacts}
+        />
         <hr />
         <br />
         <Phone

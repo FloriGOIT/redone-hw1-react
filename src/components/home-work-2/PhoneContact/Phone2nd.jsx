@@ -1,21 +1,23 @@
 import React from 'react';
+import style from './phone.module.scss';
 
 class Phone2nd extends React.Component {
-  state = { name2: '', number2: '' };
-  handleContact = input => this.setState(input);
-
-  componentDidUpdate(prevState) {
-    if (prevState !== this.state) {
-      this.props.handleSetArrContacts(this.state);
-    }
-  }
   render() {
-    console.log('state1', this.state);
-    //const { arrContacts, filterContacts } = this.props;
     return (
-      <section>
+      <section className={style.phone2}>
         <h2>Phone book-2nd</h2>
-        <NewContact handleContact={this.handleContact} />
+        <h3>Add new contact</h3>
+        <NewContact
+          handleSetArrContacts={this.props.handleSetArrContacts}
+          arrContacts={this.props.arrContacts}
+        />
+        <FilterContact handleInputFilter={this.props.handleInputFilter} />
+
+        <ListContact
+          arrContacts={this.props.arrContacts}
+          filterContacts={this.props.filterContacts}
+          handleDeleteArrContacts={this.props.handleDeleteArrContacts}
+        />
       </section>
     );
   }
@@ -25,17 +27,29 @@ export default Phone2nd;
 class NewContact extends React.Component {
   handleNewContact = event => {
     event.preventDefault();
-    const nameInput2 = event.target.elements.name2.value;
-    const numberInput2 = event.target.elements.number2.value;
-    let input = { id: Date.now(), name2: nameInput2, number2: numberInput2 };
-    this.props.handleContact(input);
+    const nameInput2 = event.target.elements.name2.value.trim();
+    const numberInput2 = event.target.elements.number2.value.trim();
+    let validInput = this.props.arrContacts.some(
+      contact =>
+        contact.name2.toLowerCase() === nameInput2.toLowerCase() ||
+        contact.number2.toLowerCase() === numberInput2
+    );
+    if (validInput) {
+      alert('You have this contact already in your agends');
+      return;
+    }
+    let input = {
+      id: `id-${Date.now()}`,
+      name2: nameInput2,
+      number2: numberInput2,
+    };
+    this.props.handleSetArrContacts(input);
+    event.target.reset();
   };
   render() {
     return (
       <form onSubmit={this.handleNewContact}>
-        <label htmlFor="newContact" name="contactNew">
-          Name:{` `}
-        </label>
+        <label htmlFor="newContact">Name:{` `}</label>
         <input
           id="newContact"
           type="text"
@@ -45,9 +59,7 @@ class NewContact extends React.Component {
           required
         />
         <br />
-        <label htmlFor="newNumber" name="numberNew">
-          Number:{` `}
-        </label>
+        <label htmlFor="newNumber">Number:{` `}</label>
 
         <input
           type="text"
@@ -64,5 +76,50 @@ class NewContact extends React.Component {
   }
 }
 
-//<FilterContact />
-//<ListContact/>
+class ListContact extends React.Component {
+  render() {
+    const { arrContacts, filterContacts, handleDeleteArrContacts } = this.props;
+    let filterArrContacts = arrContacts.filter(contact =>
+      contact.name2.toLowerCase().includes(filterContacts)
+    );
+    let renderList = filterContacts !== ''
+        ? filterArrContacts
+        : arrContacts;
+    return (
+      <div className={style.arrContacts}>
+        <h3>Contacts:</h3>
+        <ul>
+          {renderList.map(contact => (
+            <li key={contact.id}>
+              <span>
+                {contact.name2}: {contact.number2}
+              </span>
+              <button
+                type="button"
+                onClick={() => handleDeleteArrContacts(contact.id)}
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
+
+class FilterContact extends React.Component {
+  handleInput = event => {
+    this.props.handleInputFilter(event.target.value.toLowerCase());
+  };
+  render() {
+    return (
+      <div className={style.searchContact}>
+        <h3>Search contact</h3>
+        <input type="text" name="filterInput2" onChange={this.handleInput} />
+      </div>
+    );
+  }
+}
+
+

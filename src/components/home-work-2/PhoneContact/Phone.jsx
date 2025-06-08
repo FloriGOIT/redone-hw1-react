@@ -9,7 +9,7 @@ class Phone extends React.Component {
     this.setState({ number: phoneInput });
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_, prevState) {
     if (prevState !== this.state) {
       this.props.setContacts([
         ...this.props.contacts,
