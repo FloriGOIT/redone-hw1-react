@@ -19,7 +19,7 @@ class Phone extends React.Component {
   }
 
   render() {
-    console.log(Date.now());
+
     return (
       <div className={style.phoneAll}>
         <h1>PhoneBook</h1>
@@ -124,7 +124,7 @@ class ContactList extends React.Component {
         ? filteredContacts
         : contacts;
 
-    console.log('list', list);
+   
 
     return (
       <ul className={style.contacts}>

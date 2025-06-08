@@ -18,6 +18,7 @@ import SignUpForm from './test/Test1';
 import { useState } from 'react';
 
 import Phone from './home-work-2/PhoneContact/Phone';
+import Phone2nd from './home-work-2/PhoneContact/Phone2nd';
 
 function App() {
   const { username, tag, location, stats } = user;
@@ -25,16 +26,26 @@ function App() {
   const handleData = value => {
     setDataForm(value);
   };
-
-  const [contacts, setContacts] = useState([
-  ]);
+  //Phone
+  const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
-  console.log('filter', filter);
-
   const handleDeleteContact = id => {
     let newContacts = contacts.filter(contact => contact.id !== id);
     setContacts(newContacts);
   };
+
+  //Phone2nd
+  const [arrContacts, setArrContacts] = useState([
+    { id: 'id-1', name2: 'Rosie Simpson', number2: '459-12-56' },
+    { id: 'id-2', name2: 'Hermione Kline', number2: '443-89-12' },
+    { id: 'id-3', name2: 'Eden Clements', number2: '645-17-79' },
+    { id: 'id-4', name2: 'Annie Copeland', number2: '227-91-26' },
+  ]);
+  const [filterContacts, setFilterContacts] = useState('');
+
+  const handleSetArrContacts = input => setArrContacts([...arrContacts, input])
+ 
+
   return (
     <>
       <h1>React homework redone</h1>
@@ -46,6 +57,9 @@ function App() {
           padding: 15,
         }}
       >
+        <Phone2nd handleSetArrContacts={handleSetArrContacts} />
+        <hr />
+        <br />
         <Phone
           contacts={contacts}
           setContacts={setContacts}

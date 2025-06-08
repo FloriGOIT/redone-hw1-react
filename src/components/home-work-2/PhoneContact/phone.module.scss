@@ -1,4 +1,18 @@
-.phoneAll{border: 3px solid blue; padding: 10px; border-radius: 10px;width: 400px; background-color: rgba(135, 212, 222, 0.363);}
+.phoneAll {
+  border: 3px solid blue;
+  padding: 10px;
+  border-radius: 10px;
+  width: 400px;
+  background-color: rgba(135, 212, 222, 0.363);
+}
 
-.contacts{list-style-type: none;width: fit-content;
-li{display: flex; gap:20px; justify-content: space-between; padding-bottom: 5px;}}
+.contacts {
+  list-style-type: none;
+  width: fit-content;
+  li {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    padding-bottom: 5px;
+  }
+}
