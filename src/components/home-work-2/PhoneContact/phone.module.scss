@@ -17,17 +17,17 @@
   }
 }
 
-.phone2{
+.phone2{border: 4px dashed rgb(221, 28, 60);padding: 20px;width: 400px; background-color: plum;
   h3{padding-top: 20px; padding-bottom: 10px;}
   
-  .arrContacts {
+  .arrContacts {background-color: rgb(248, 198, 248); padding: 0px 10px;
       h3 {
-        padding-top: 40px;
+        margin-top: 40px;
       }
   
       ul {
         list-style-type: none;
-        width: 400px;
+        
         padding: 20px 0px;
   
         li {
