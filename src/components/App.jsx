@@ -15,13 +15,13 @@ import Feedback from './home-work-2/Feedback/Feedback';
 
 import CarTest from './test/Test';
 import SignUpForm from './test/Test1';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Phone from './home-work-2/PhoneContact/Phone';
 import Phone2nd from './home-work-2/PhoneContact/Phone2nd';
 
 import { ErrorBoundary, BuggyComponent } from './test/ErrorHandeling';
-import { TestFetch } from './test/Fetch1st';
+//import { TestFetch } from './test/Fetch1st';
 
 function App() {
   const { username, tag, location, stats } = user;
@@ -38,12 +38,8 @@ function App() {
   };
 
   //Phone2nd
-  const [arrContacts, setArrContacts] = useState([
-    { id: 'id-1', name2: 'Rosie Simpson', number2: '459-12-56' },
-    { id: 'id-2', name2: 'Hermione Kline', number2: '443-89-12' },
-    { id: 'id-3', name2: 'Eden Clements', number2: '645-17-79' },
-    { id: 'id-4', name2: 'Annie Copeland', number2: '227-91-26' },
-  ]);
+  let items = JSON.parse(localStorage.getItem("arrContacts")) || [];
+  const [arrContacts, setArrContacts] = useState([...items]);
   const [filterContacts, setFilterContacts] = useState('');
 
   const handleSetArrContacts = input => setArrContacts([...arrContacts, input]);
@@ -51,6 +47,7 @@ function App() {
   const handleDeleteArrContacts = id => {
     setArrContacts([...arrContacts.filter(contact => contact.id !== id)]);
   };
+  useEffect(() => { let arrLS = JSON.stringify(arrContacts);  localStorage.setItem("arrContacts", arrLS)},[arrContacts])
 
   return (
     <>
@@ -63,7 +60,6 @@ function App() {
           padding: 15,
         }}
       >
-        <TestFetch/>
         <hr /> <hr />
         <br />
         <BuggyComponent />
