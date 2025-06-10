@@ -21,6 +21,7 @@ import Phone from './home-work-2/PhoneContact/Phone';
 import Phone2nd from './home-work-2/PhoneContact/Phone2nd';
 
 import { ErrorBoundary, BuggyComponent } from './test/ErrorHandeling';
+import { TestFetch } from './test/Fetch1st';
 
 function App() {
   const { username, tag, location, stats } = user;
@@ -62,9 +63,17 @@ function App() {
           padding: 15,
         }}
       >
+        <TestFetch/>
+        <hr /> <hr />
+        <br />
+        <BuggyComponent />
+        <hr /> <hr />
+        <br />
         <ErrorBoundary>
           <BuggyComponent />
         </ErrorBoundary>
+        <hr /> <hr />
+        <br />
         <Phone2nd
           handleSetArrContacts={handleSetArrContacts}
           arrContacts={arrContacts}

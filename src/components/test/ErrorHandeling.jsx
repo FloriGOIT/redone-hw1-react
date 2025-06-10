@@ -1,21 +1,14 @@
 import React from 'react';
 
 export class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false, error: null, errorInfo: null };
-  }
+  state = { hasError: false, error: null, info: null };
 
   componentDidCatch(error, info) {
-    // Catch errors in any components below and re-render with fallback UI
     this.setState({
       hasError: true,
       error: error,
-      errorInfo: info,
+      info: info,
     });
-
-    // You could also log error messages to an error reporting service here
-    console.error('Caught by ErrorBoundary:', error, info);
   }
 
   render() {
@@ -26,7 +19,7 @@ export class ErrorBoundary extends React.Component {
           <details style={{ whiteSpace: 'pre-wrap' }}>
             {this.state.error && this.state.error.toString()}
             <br />
-            {this.state.errorInfo?.componentStack}
+            {this.state.info?.componentStack}
           </details>
         </div>
       );
@@ -37,25 +30,22 @@ export class ErrorBoundary extends React.Component {
 }
 
 export class BuggyComponent extends React.Component {
-        constructor(props) {
-          super(props);
-          this.state = { shouldCrash: false };
-        }
-      
-        handleClick = () => {
-          this.setState({ shouldCrash: true });
-        };
-      
-        render() {
-          if (this.state.shouldCrash) {
-            throw new Error('Oops! This component crashed.');
-          }
-      
-          return (
-            <div>
-              <p>This component is working fine.</p>
-              <button onClick={this.handleClick}>Crash this component</button>
-            </div>
-          );
-        }
-      }
+  state = { shouldCrash: false };
+
+  handleClick = () => {
+    this.setState({ shouldCrash: true });
+  };
+
+  render() {
+    if (this.state.shouldCrash) {
+      throw new Error('Oops! This component crashed.');
+    }
+
+    return (
+      <div>
+        <p>This component is working fine.</p>
+        <button onClick={this.handleClick}>Crash this component</button>
+      </div>
+    );
+  }
+}
