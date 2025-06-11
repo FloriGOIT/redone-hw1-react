@@ -5,6 +5,12 @@
   width: 400px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.514);
   border-radius: 5px;
+  img {
+      border-radius: 50%;
+      margin-top: 10px;
+      padding: 10px;
+      border: 2px solid gray;
+      background-color: white; }
   h2 {
       background: linear-gradient(to right, yellow, rgb(103, 231, 18), rgb(7, 184, 7), blue, purple);
     }
@@ -43,10 +49,4 @@
   }
 }
 
-img {
-  border-radius: 50%;
-  margin-top: 10px;
-  padding: 10px;
-  border: 2px solid gray;
-  background-color: white;
-}
+

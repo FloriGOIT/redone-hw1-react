@@ -1,8 +1,7 @@
 import React from "react"
 import { fetchArticlesWithQuery } from "./services"
-import axios from "axios"
 
-axios.defaults.baseURL="https://hn.algolia.com/api/v"
+
 
 const ArticleList = (props) => {
 return(<ul>

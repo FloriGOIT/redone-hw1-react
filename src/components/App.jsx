@@ -21,7 +21,9 @@ import Phone from './home-work-2/PhoneContact/Phone';
 import Phone2nd from './home-work-2/PhoneContact/Phone2nd';
 
 import { ErrorBoundary, BuggyComponent } from './test/ErrorHandeling';
-import { TestFetch } from './test/Fetch1st';
+import { TestFetch } from './test/Fetch1st';         
+
+import ImgGallery from './home-work-3/ImgGallery';
 
 function App() {
   const { username, tag, location, stats } = user;
@@ -38,7 +40,7 @@ function App() {
   };
 
   //Phone2nd
-  let items = JSON.parse(localStorage.getItem("arrContacts")) || [];
+  let items = JSON.parse(localStorage.getItem('arrContacts')) || [];
   const [arrContacts, setArrContacts] = useState([...items]);
   const [filterContacts, setFilterContacts] = useState('');
 
@@ -47,7 +49,10 @@ function App() {
   const handleDeleteArrContacts = id => {
     setArrContacts([...arrContacts.filter(contact => contact.id !== id)]);
   };
-  useEffect(() => { let arrLS = JSON.stringify(arrContacts);  localStorage.setItem("arrContacts", arrLS)},[arrContacts])
+  useEffect(() => {
+    let arrLS = JSON.stringify(arrContacts);
+    localStorage.setItem('arrContacts', arrLS);
+  }, [arrContacts]);
 
   return (
     <>
@@ -60,7 +65,10 @@ function App() {
           padding: 15,
         }}
       >
-        <TestFetch/>
+        <ImgGallery />
+        <hr />
+        <br />
+        <TestFetch /> 
         <hr /> <hr />
         <br />
         <BuggyComponent />
