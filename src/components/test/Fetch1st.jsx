@@ -1,50 +1,35 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { fetchArticlesWithQuery } from './services';
+import React from "react"
+import { fetchArticlesWithQuery } from "./services"
+import axios from "axios"
 
-axios.defaults.baseURL = 'https://hn.algolia.com/api/v1';
+axios.defaults.baseURL="https://hn.algolia.com/api/v"
 
-const ArticleList = ({ articles }) => (
-  <ul>
-    {articles.map(({ objectID, url, title }) => (
-      <li key={objectID}>
-        <a href={url} target="_blank" rel="noreferrer noopener">
-          {title}
-        </a>
-      </li>
-    ))}
-  </ul>
-);
+const ArticleList = (props) => {
+return(<ul>
+{props.info.map(({objectID, title, url}) => {return <li key={objectID}>
+<a href={url} alt={title}>{title}</a></li>})}
+</ul>)
 
-export class TestFetch extends Component {
-  state = {
-    articles: [],
-    isLoading: false,
-    error: null,
-  };
+}
 
-  async componentDidMount() {
-    this.setState({ isLoading: true });
+export class TestFetch extends React.Component{
+state={info:[], error: null, isLoading:false}
+async componentDidMount(){
+this.setState({isLoading:true});
+try{const data = await fetchArticlesWithQuery("react");
+    this.setState({info:data})}
+catch (error) { this.setState({ error: error });  console.log(error)}
+finally{this.setState({isLoading:false})}
+}
 
-    try {
-      const articles = fetchArticlesWithQuery('react');
-      this.setState({ articles });
-    } catch (error) {
-      this.setState({ error });
-    } finally {
-      this.setState({ isLoading: false });
-    }
-  }
+render(){
+const{isLoading, error, info}=this.state;
 
-  render() {
-    const { articles, isLoading, error } = this.state;
+return(<div>
+{isLoading && <p>Information is loading........................</p>}
+{error && <p>{error.message}</p>}
+{info.length>0 && <ArticleList info={info}/>}
+</div>
+)}
 
-    return (
-      <div>
-        {error && <p>Whoops, something went wrong: {error.message}</p>}
-        {isLoading && <p>Loading...</p>}
-        {articles.length > 0 && <ArticleList articles={articles} />}
-      </div>
-    );
-  }
 }

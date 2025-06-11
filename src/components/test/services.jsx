@@ -1,7 +1,6 @@
-import axios from "axios";
+import axios from "axios"
 
-export const fetchArticlesWithQuery = async searchQuery => {
-  const response = axios.get(`/search?query=${searchQuery}`);
-  return response.data.hits;
-};
-
+export const fetchArticlesWithQuery = async searchQuery=>
+{const infoFetched = await axios.get(`/search?query=${searchQuery}`);
+return infoFetched.data.hits;
+}
