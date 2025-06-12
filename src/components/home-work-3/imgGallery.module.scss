@@ -1,6 +1,6 @@
 .imgGalleryAll{
        
-        width: fit-content;
+        width: 1200px;
         height:auto;
         border:1px solid black;
         background-color:rgb(240, 223, 150);
@@ -11,5 +11,9 @@
                 grid-template-columns: auto auto auto;
         li img {width: 350px;
         height: 350px; object-fit: cover;}}
+        .searchImg{display: flex; flex-direction:row; height:45px; justify-content: center; margin-top: 20px; 
+              input{size: 500px;padding-left: 25px;font-size: 24px}
+              button{width:50px}
+        }
 
 }
