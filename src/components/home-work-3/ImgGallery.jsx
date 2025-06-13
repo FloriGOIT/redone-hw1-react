@@ -5,11 +5,11 @@ import ContentLoader from 'react-content-loader';
 
 //<Searchbar>, <ImgGallery>, <ImageGalleryItem>, <Loader>, <Button> и <Modal>
 
-const fetchImgs = async (page, query) => {
+const fetchImgs = async (perPage,page, query) => {
   const apiB = axios.create({
     baseURL: `https://pixabay.com/api/?key=42799638-b50871d8c9a958480a9d6ba7c&image_type=photo&orientation=horizontal`,
   });
-  const imagesInfo = await apiB.get(`&per_page=9&page=${page}&q=${query}`);
+  const imagesInfo = await apiB.get(`&per_page=${perPage}&page=${page}&q=${query}`);
   return imagesInfo.data.hits;
 };
 
@@ -22,33 +22,40 @@ class ImgGallery extends React.Component {
     imageModal: '',
     imageDescription: '',
     isOpenModal: false,
-    page:1
+    page: 1,
+    perPage:9
   };
   handleQueryChange = input => {
-    this.setState({ query: input });
-    console.log('input', input);
-    console.log('state', this.state.query);
+    this.setState({ query: input, page:1, perPage:9,imagesArr: [] });
   };
   handleImg = (input1, input2) =>
-    this.setState({ imageModal: input1, imageDescription: input2, isOpenModal: true });
-  handleCloseModal = () => {
     this.setState({
-      isOpenModal: false, imageModal: '',
-      imageDescription: ''
+      imageModal: input1,
+      imageDescription: input2,
+      isOpenModal: true,
+
     });
- console.log("handleCloseModal",this.state)};
-  async componentDidUpdate(prevProps, prevState) {
-    if (prevState.query !== this.state.query) {
+  handleCloseModal = () => this.setState({
+      isOpenModal: false,
+      imageModal: '',
+      imageDescription: '',
+  });
+  
+  handleNextPage = () => this.setState({page: this.state.page +1})
+
+  async componentDidUpdate(prevProps, prevState) {if (this.state.query !== ""){
+    if (prevState.query !== this.state.query || prevState.page !== this.state.page ) {
       this.setState({ isLoading2: true });
+
       try {
-        const data = await fetchImgs(this.state.page, this.state.query);
-        this.setState({ imagesArr: data });
+        const data = await fetchImgs(this.state.perPage, this.state.page, this.state.query);
+        this.setState(prevState=>({ imagesArr: [...prevState.imagesArr, ...data] }));
       } catch (error) {
         this.setState({ error2: error });
       } finally {
         this.setState({ isLoading2: false });
       }
-    }
+    }}
   }
 
   render() {
@@ -62,13 +69,16 @@ class ImgGallery extends React.Component {
             handleImg={this.handleImg}
           />
           {this.state.isLoading2 && <MyLoader />}
+          {this.state.imagesArr.length>0 && <NextPage handleNextPage={this.handleNextPage} />}
         </div>
 
-        {this.state.isOpenModal && <Modal
-          imageModal={this.state.imageModal}
-          imageDescription={this.state.imageDescription}
-          handleCloseModal={this.handleCloseModal}
-        />}
+        {this.state.isOpenModal && (
+          <Modal
+            imageModal={this.state.imageModal}
+            imageDescription={this.state.imageDescription}
+            handleCloseModal={this.handleCloseModal}
+          />
+        )}
       </section>
     );
   }
@@ -84,10 +94,7 @@ class ImageGalleryItem extends React.Component {
         {data.map(({ id, tags, webformatURL }) => {
           return (
             <li key={id} onClick={() => handleImg(webformatURL, tags)}>
-              <img
-                src={webformatURL}
-                alt={tags}
-              />
+              <img src={webformatURL} alt={tags} />
             </li>
           );
         })}
@@ -99,7 +106,7 @@ class ImageGalleryItem extends React.Component {
 class Search extends React.Component {
   handleInputChange = e => {
     e.preventDefault();
-    let input = e.currentTarget.elements.inputSch.value.trim();
+    let input = e.target.elements.inputSch.value.trim();
     this.props.handleQueryChange(input);
   };
   render() {
@@ -135,19 +142,41 @@ const MyLoader = () => (
 
 class Modal extends React.Component {
 
-  handleClose = e => {
-    console.log("e.target",e.target); console.log("e.currentTarget",e.currentTarget); 
-    if(e.target === e.currentTarget){return this.props.handleCloseModal()}
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleEscKey);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleEscKey);
+  }
+
+  handleEscKey = (e) => {
+    if (e.key === 'Escape') {
+      this.props.handleCloseModal();
+    }
+  };
+
+  handleClose = e => {
+    if (e.target === e.currentTarget) {
+      return this.props.handleCloseModal()
+    }
+  };
   render() {
     return (
       <div className={style.overlay} onClick={this.handleClose} name="overlay">
-          <img name="picture"
-            src={this.props.imageModal}
-            alt={this.props.imageDescription}
-          />
-
+        <img
+          name="picture"
+          src={this.props.imageModal}
+          alt={this.props.imageDescription}
+        />
       </div>
     );
+  }
+}
+
+class NextPage extends React.Component{
+
+  render() {
+    return <button type="button" className={style.nextPage} onClick={this.props.handleNextPage}>More pictures</button>
   }
 }

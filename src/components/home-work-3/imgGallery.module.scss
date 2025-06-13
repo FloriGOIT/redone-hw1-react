@@ -2,7 +2,7 @@
   .imgGallery {
     position: relative;
     width: 1200px;
-    height: 890px;
+    min-height: 890px;
     border: 1px solid black;
     background-color: rgb(186, 240, 150);
     padding-bottom: 80px;
@@ -36,6 +36,7 @@
         width: 50px;
       }
     }
+        .nextPage{padding: 20px; display: flex; margin: auto 50%; width: 100px;}
   }
   .overlay {
     position: absolute;
