@@ -2,6 +2,7 @@ import style from './imgGallery.module.scss';
 import axios from 'axios';
 import React from 'react';
 import ContentLoader from 'react-content-loader';
+import PropTypes from 'prop-types';
 
 //<Searchbar>, <ImgGallery>, <ImageGalleryItem>, <Loader>, <Button> и <Modal>
 
@@ -180,3 +181,32 @@ class NextPage extends React.Component{
     return <button type="button" className={style.nextPage} onClick={this.props.handleNextPage}>More pictures</button>
   }
 }
+/*
+<Search handleQueryChange={this.handleQueryChange} />
+          <ImageGalleryItem
+            data={this.state.imagesArr}
+            handleImg={this.handleImg}
+          />
+          {this.state.isLoading2 && <MyLoader />}
+          {this.state.imagesArr.length>0 && <NextPage handleNextPage={this.handleNextPage} />}
+        </div>
+
+        {this.state.isOpenModal && (
+          <Modal
+            imageModal={this.state.imageModal}
+            imageDescription={this.state.imageDescription}
+            handleCloseModal={this.handleCloseModal}
+          />
+        )}*/
+
+Search.propTypes = {
+  handleQueryChange: PropTypes.func
+}
+ImageGalleryItem.propTypes = {
+  data: PropTypes.array,
+  handleImg: PropTypes.func
+}
+NextPage.propTypes = { handleNextPage: PropTypes.func }
+Modal.propTypes={  imageModal: PropTypes.string,
+  imageDescription: PropTypes.string,
+  handleCloseModal: PropTypes.func}
