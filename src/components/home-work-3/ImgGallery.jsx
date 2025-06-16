@@ -142,6 +142,16 @@ const MyLoader = () => (
 );
 
 class Modal extends React.Component {
+  handleClose = e => {
+    if (e.target === e.currentTarget) {
+      return this.props.handleCloseModal()
+    }
+  };
+  handleEscKey = (e) => {
+    if (e.key === 'Escape') {
+      this.props.handleCloseModal();
+    }
+  };
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleEscKey);
@@ -151,17 +161,9 @@ class Modal extends React.Component {
     window.removeEventListener('keydown', this.handleEscKey);
   }
 
-  handleEscKey = (e) => {
-    if (e.key === 'Escape') {
-      this.props.handleCloseModal();
-    }
-  };
+ 
 
-  handleClose = e => {
-    if (e.target === e.currentTarget) {
-      return this.props.handleCloseModal()
-    }
-  };
+
   render() {
     return (
       <div className={style.overlay} onClick={this.handleClose} name="overlay">
@@ -181,23 +183,6 @@ class NextPage extends React.Component{
     return <button type="button" className={style.nextPage} onClick={this.props.handleNextPage}>More pictures</button>
   }
 }
-/*
-<Search handleQueryChange={this.handleQueryChange} />
-          <ImageGalleryItem
-            data={this.state.imagesArr}
-            handleImg={this.handleImg}
-          />
-          {this.state.isLoading2 && <MyLoader />}
-          {this.state.imagesArr.length>0 && <NextPage handleNextPage={this.handleNextPage} />}
-        </div>
-
-        {this.state.isOpenModal && (
-          <Modal
-            imageModal={this.state.imageModal}
-            imageDescription={this.state.imageDescription}
-            handleCloseModal={this.handleCloseModal}
-          />
-        )}*/
 
 Search.propTypes = {
   handleQueryChange: PropTypes.func
