@@ -1,3 +1,5 @@
+//full Class
+
 import React from 'react';
 
 const DEFAULT_COLOR = 'blue';

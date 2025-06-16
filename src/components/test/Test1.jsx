@@ -1,3 +1,5 @@
+//this.props.onSubmit(this.state.login );
+
 import React from 'react';
 
 class SignUpForm extends React.Component {
