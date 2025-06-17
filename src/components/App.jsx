@@ -1,9 +1,13 @@
 
-import ImgGallery from "./home-work-3/ImgGallery";
+
 import { createContext, useContext, useState } from "react";
 import { PreferenciesSection, PreviousValueTracker } from "./test/Test2";
+import FunFeedback from "./home-work-4/FuncFeedback";
+
+
 const UserContext = createContext();
 export const useUserContect = () => useContext(UserContext);
+
 
 function App() {
 
@@ -21,6 +25,9 @@ function App() {
           padding: 15,
         }}
       >
+        <FunFeedback/>
+      <hr />
+      <br />
         <PreviousValueTracker />
         <hr />
         <br />
@@ -28,9 +35,7 @@ function App() {
           <PreferenciesSection/>
         </UserProfile>
 
-      <hr />
-      <br />
-        <ImgGallery />
+      
 
 
       </div>
