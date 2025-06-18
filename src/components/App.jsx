@@ -4,6 +4,7 @@ import { createContext, useContext, useState } from "react";
 import { PreferenciesSection, PreviousValueTracker } from "./test/Test2";
 import FunFeedback from "./home-work-4/FuncFeedBack/FuncFeedback";
 import { FuncAgenda } from "./home-work-4/FuncAgenda/FuncAgenda";
+import { FuncGallery } from "./home-work-4/Gallery/FuncGallery";
 
 
 const UserContext = createContext();
@@ -26,6 +27,9 @@ function App() {
           padding: 15,
         }}
       >
+        <FuncGallery />
+        <hr />
+        <br />
         <FuncAgenda />
         <hr />
         <br />
