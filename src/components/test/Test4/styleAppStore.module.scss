@@ -1,0 +1,28 @@
+
+.sharedLayout{span {font-size: 20px; color: yellow; font-weight: 900;background-color: brown;padding: 10px;}
+        
+}
+.active {
+        background-color: rgb(245, 242, 62);
+}
+
+.sharedLayout {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .nav {
+                margin-right: 30px;
+                background-color: blanchedalmond;
+                color: black;
+                text-decoration: none;
+                padding: 10px;
+                border: 1px solid brown;
+                font-size: 20px;
+        }
+
+        .active {
+                background-color: brown; color: rgb(247, 247, 127)
+        }
+}
+
