@@ -1,3 +1,7 @@
-.galleryFAll{border:1px solid black; background-color: rgb(147, 245, 245);
-        .searchingImg{text-align: center;}
-        .displayImgs{list-style-type: none; display: grid; grid-template-columns: repeat(3,auto); gap:48px; justify-content: center; margin-bottom:40px}}
+.galleryFAll{border:1px solid black; background-color: rgb(147, 245, 245); width: 100%;
+        .modalOverlay{background-color: rgba(147, 245, 245, 0.493);
+                   img{margin: 10px auto; width:70%; height:70%;}}
+        .moreImgs{margin-top: 20px; text-align: center;}
+        .searchingImg{text-align: center; margin: 20px auto;}
+        .displayImgs{list-style-type: none; display: grid; grid-template-columns: repeat(3,auto); gap:48px; justify-content: center; margin-bottom:40px}
+}

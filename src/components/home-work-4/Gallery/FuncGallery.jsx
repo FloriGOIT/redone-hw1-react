@@ -7,10 +7,10 @@ import style from './funcGallery.module.scss';
 
 const apiC = axios.create({
   baseURL:
-    'https://pixabay.com/api/?key=42799638-b50871d8c9a958480a9d6ba7c&image_type=photo&orientation=horizontal&per_page=9&page=1',
+    'https://pixabay.com/api/?key=42799638-b50871d8c9a958480a9d6ba7c&image_type=photo&orientation=horizontal',
 });
 const fetchGalleryItems = async (query, nrPage) => {
-  const isFetching = await apiC.get(`&q=${query}&page=${nrPage}`);
+  const isFetching = await apiC.get(`&per_page=3&q=${query}&page=${nrPage}`);
   return isFetching.data.hits;
 };
 
@@ -18,15 +18,19 @@ export const FuncGallery = () => {
   const [arrImgs, setArrImgs] = useState([]);
   const [isPending, setIsPending] = useState(false);
   const [ifError, setIfError] = useState(null);
-        const [isQuery, setIsQuery] = useState('');
-        const [nrPage, setNrPage] = useState(1)
+  const [isQuery, setIsQuery] = useState('');
+  const [nrPage, setNrPage] = useState(1);
+  const [modalInfo, setModalInfo] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+
 
   useEffect(() => {
     const getImgs = async () => {
       setIsPending(true);
       try {
         const data = await fetchGalleryItems(isQuery, nrPage);
-        setArrImgs(prevState => [...prevState, data]);
+        setArrImgs(prevState => [...prevState, ...data]);
       } catch (error) {
         setIfError(error.message);
       } finally {
@@ -36,20 +40,30 @@ export const FuncGallery = () => {
     if (isQuery) getImgs();
   }, [isQuery, nrPage]);
 
-        const handleQuery = input => { setArrImgs([]); setNrPage(1); setIsQuery(input)};
-        const handleMoreImgs = () => { setNrPage(prevState => prevState + 1);  console.log(nrPage)}
+  const handleQuery = input => {
+    setArrImgs([]);
+    setNrPage(1);
+    setIsQuery(input);
+  };
+  const handleMoreImgs = () => {
+    setNrPage(prevState => prevState + 1);
+    console.log(nrPage);
+  };
 
-  console.log('arrImgs', arrImgs);
-  console.log('isQuery', isQuery);
+  const handleModalInfo = info => setModalInfo(info)
+  console.log('modalInfo', modalInfo);
+
+  const handleToggleModal = () => setIsModalOpen(prevState=> !prevState)
 
   return (
     <section className={style.galleryFAll}>
       <SearchingImg handleQuery={handleQuery} />
       <br />
       <br />
-                  <DisplayImgs arrImgs={arrImgs}  />      <br />
-                  <br />
-                  <MoreImgs handleMoreImgs={handleMoreImgs}/>
+      <DisplayImgs arrImgs={arrImgs} handleModalInfo={handleModalInfo} handleToggleModal={ handleToggleModal} /> <br />
+      <br />
+      <MoreImgs handleMoreImgs={handleMoreImgs} />
+      {isModalOpen && <Modal modalInfo={modalInfo} isModalOpen={isModalOpen} handleToggleModal={ handleToggleModal}  />}
     </section>
   );
 };
@@ -73,17 +87,20 @@ const SearchingImg = props => {
   );
 };
 
-const DisplayImgs = ({ arrImgs }) => {
+const DisplayImgs = ({ arrImgs,handleModalInfo,handleToggleModal }) => {
   return (
     <>
       <ul className={style.displayImgs}>
         {arrImgs.map(({ id, tags, webformatURL }) => {
+          const handleImgInfo = () => {
+            const imageInfo = { id, webformatURL, tags }; handleModalInfo(imageInfo); handleToggleModal()
+          };
           return (
-            <li key={id} id={id}>
+            <li key={id} id={id} onClick={handleImgInfo}>
               <img
                 srcSet={webformatURL}
                 alt={tags}
-                style={{ width: '400px', height: '400px', objectFit: 'cover' }}
+                style={{ width: '400px', height: '400px', objectFit: 'cover' }} 
               />
             </li>
           );
@@ -93,6 +110,20 @@ const DisplayImgs = ({ arrImgs }) => {
   );
 };
 
-const MoreImgs = ({handleMoreImgs}) => {
-  return <button type="burron" onClick={handleMoreImgs}>More images</button>;
+const MoreImgs = ({ handleMoreImgs }) => {
+  return (
+    <div className={style.moreImgs}>
+      <button type="burron" onClick={handleMoreImgs}>
+        More images
+      </button>
+    </div>
+  );
+};
+
+const Modal = ({modalInfo,  handleToggleModal}) => {
+  return (
+    <div className={style.modalOverlay} onClick={() => handleToggleModal()}>
+        <img src={modalInfo.webformatURL} alt={modalInfo.tags} />
+    </div>
+  );
 };
