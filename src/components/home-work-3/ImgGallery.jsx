@@ -128,7 +128,7 @@ const MyLoader = () => (
     foregroundColor={'rgb(21, 119, 51, 0.80)'}
     viewBox="0 0 380 70"
   >
-    {/* Only SVG shapes */}
+
     <rect x="0" y="0" rx="5" ry="5" width="10" height="10" />
     <rect x="20" y="0" rx="5" ry="5" width="10" height="10" />
     <rect x="40" y="0" rx="5" ry="5" width="10" height="10" />
