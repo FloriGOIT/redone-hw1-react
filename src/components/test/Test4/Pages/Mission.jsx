@@ -1,4 +1,4 @@
-export const Mission = () => {
+const Mission = () => {
   return (
     <>
       <h3>Our MISSION</h3><br/>
@@ -10,3 +10,5 @@ export const Mission = () => {
     </>
   );
 };
+
+export default Mission

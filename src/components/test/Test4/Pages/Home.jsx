@@ -1,6 +1,6 @@
 import style from '../styleAppStore.module.scss';
 
-export const Home = () => {
+const Home = () => {
   return (
     <div className={style.home}>
       <h2>Welcome</h2><br /><br />
@@ -12,5 +12,5 @@ export const Home = () => {
     </div>
   );
 };
-
+export default Home
 /**/
