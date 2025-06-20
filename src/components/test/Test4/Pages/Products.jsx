@@ -1,14 +1,13 @@
 import products from '../helper';
 import style from '../styleAppStore.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 
 const Products = () => {
+        const location = useLocation();
+        console.log("location",location)
   const [searchParams, setSearchParams] = useSearchParams();
   const param = searchParams.get('name') || '';
-  console.log('param', param);
-  console.log('ana are mere');
-
   const handleInput = input => {
     if (input === '') {
       setSearchParams({});
@@ -36,7 +35,7 @@ const Products = () => {
             fontSize: '18px',
           }}
           value={param}
-         onChange={e => handleInput(e.target.value.toLowerCase())}
+          onChange={e => handleInput(e.target.value.toLowerCase())}
         />
       </div>
       <br />
