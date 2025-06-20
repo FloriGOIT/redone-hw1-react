@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_homework_template=self.webpackChunkreact_homework_template||[]).push([[314],{314:function(e,a,r){r.r(a);var n=r(184);a.default=function(){return(0,n.jsxs)(n.Fragment,{children:[(0,n.jsx)("h3",{children:"Main employees"}),(0,n.jsx)("pre",{children:"CEO - Gabrijela Vohu Manah Sales - Darius Marianne Product - S\xe9gdae Jean-Pierre Marketing - Melina Theotimos Engineering - Gregor Ramadhani"})]})}}}]);
+//# sourceMappingURL=314.11b55184.chunk.js.map
