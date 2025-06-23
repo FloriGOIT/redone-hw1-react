@@ -1,7 +1,8 @@
 
 
 
-import { AppStore } from "./test/Test4/AppStore";
+import AppMovieStore from "./home-work-5/AppMovieStore";
+//import { AppStore } from "./test/Test4/AppStore";         <AppStore/>
 
 function App() {
 
@@ -19,11 +20,10 @@ function App() {
           padding: 15,
         }}
       > 
-        <AppStore/>
-      
+        <AppMovieStore/>
         <hr />
         <br />
-        
+
       </div>
     </>
   );
