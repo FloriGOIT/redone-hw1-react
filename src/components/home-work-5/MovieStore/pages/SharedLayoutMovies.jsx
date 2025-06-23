@@ -1,7 +1,10 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import style from '../movieWebSite.module.scss';
 
+
 const SharedLayoutMovies = () => {
+
+
   return (
     <div className={style.moviesAll}>
       <nav>

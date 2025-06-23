@@ -4,3 +4,10 @@
         color: cadetblue; margin-right: 20px;}
 .active{background-color: cadetblue;
         color: white;}}
+.detailsAll{padding: 20px 40px;
+        .detailsUp {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 30px;
+                }
+}

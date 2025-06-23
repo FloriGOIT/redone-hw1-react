@@ -1,20 +1,23 @@
-import {details} from '../helpers';
+
 import { Link } from 'react-router-dom';
-import style from "../movieWebSite.module.scss"
+import style from "../movieWebSite.module.scss";
 
-export const detailsProcesed = [...details.results]
-console.log(detailsProcesed[0])
+const Home = ({handleMovieId,movies}) => {
 
-const Home = ({handleMovieId}) => {
+
+
 
   return (
-          <div className={style.movieList}>
+    <div className={style.movieList}>
+      <h1>Trending movies</h1>
                   <br/> 
       <ul>
-      {detailsProcesed.map(movie => {
+        {movies.map(movie => {
+
+        const link = `/movies/${movie.id}`
           return (
                   <li key={movie.id} onClick={()=> handleMovieId(movie.id)}>
-                          <Link to="/movies/:id" >{movie.title}</Link>
+                          <Link to={link} >{movie.title}</Link>
             </li>
           );
         })}
