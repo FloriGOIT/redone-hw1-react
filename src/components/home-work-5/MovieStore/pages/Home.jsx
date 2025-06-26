@@ -3,10 +3,6 @@ import { Link } from 'react-router-dom';
 import style from "../movieWebSite.module.scss";
 
 const Home = ({handleMovieId,movies}) => {
-
-
-
-
   return (
     <div className={style.movieList}>
       <h1>Trending movies</h1>

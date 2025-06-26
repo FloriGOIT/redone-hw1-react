@@ -1,18 +1,23 @@
 
+import { useEffect, useState } from 'react';
 import { genres } from '../genres';
 import style from '../movieWebSite.module.scss';
 import { Link, Outlet } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+const MovieSummery = ({ movies }) => {
 
-const MovieSummery = ({ movieId, movies }) => {
-  const isMovie = movies.filter(movie => movie.id === movieId);
-  const isMovieSpread = isMovie[0];
+const [dataFetched, setDataFetched] = useState([])
+  const idParam = useParams();
+  const idParamConverted = Number(idParam.id);
+  console.log("idParam",idParam)
   const basicUrl = `https://image.tmdb.org/t/p/w500`;
-  const srcShort = isMovieSpread.backdrop_path;
+  const srcShort = dataFetched.poster_path;
   const fullSrc = basicUrl + srcShort;
-  const vote = Math.round(isMovieSpread.vote_average);
-  const genresIds = isMovieSpread.genre_ids;
+  const vote = Math.round(dataFetched.popularity);
+  const genresIds = dataFetched.genres;
+  console.log("genresIds",genresIds)
   const x = [];
-  console.log('movieId', movieId);
+ 
   for (const gen of genresIds) {
     let y = genres.find(genr => genr.id === gen);
     if (y) {
@@ -21,6 +26,20 @@ const MovieSummery = ({ movieId, movies }) => {
   }
   const xToString = x.join(', ');
 
+  useEffect(() => {
+    const URL = `https://api.themoviedb.org/3/movie/${idParamConverted}?language=en-US`;
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0NjgyOWZhMWY2NzdmMjkwZmQ3NTAyNWFmOGI0N2UyMSIsIm5iZiI6MTcxOTY3MjIzNC4zMDIsInN1YiI6IjY2ODAxZGFhMjhkMzA2OTI2NzViZTZiNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.V6-Px6XK3mzZbcoyTrOmxgROWXW8xsyr0QzjUgkkxQk"
+      }
+    }
+    fetch(URL, options)
+      .then(response => response.json())
+    .then(data=>setDataFetched([...data]))
+  },[idParamConverted])
+
   return (
     <section className={style.detailsAll}>
       <div className={style.detailsUp}>
@@ -28,17 +47,17 @@ const MovieSummery = ({ movieId, movies }) => {
           <Link to="/">Go back</Link> <br />
           <img
             src={fullSrc}
-            alt={isMovieSpread.title}
-            style={{ width: '400px', height: '400px', objectFit: 'cover' }}
+            alt={dataFetched.title}
+            style={{ width: '400px', objectFit:"contain" }}
           />
         </div>
 
         <div style={{ width: '400px' }}>
-          <h2>{isMovieSpread.title}</h2>
+          <h2>{dataFetched.title}</h2>
           <p>People vote: {vote} %</p>
           <br />
           <h2>Overview</h2>
-          <p>{isMovieSpread.overview}</p> <br />
+          <p>{dataFetched.overview}</p> <br />
           <h2>Genre</h2>
           <p>{xToString}</p>
         </div>

@@ -12,7 +12,7 @@ const MovieWebSite = () => {
   const [movieId, setMovieId] = useState('');
   const handleMovieId = input => setMovieId(input);
   const [movies, setMovies] = useState([]);
-
+  console.log("movieId main", movieId)
   useEffect(() => {
     const url =
       'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
@@ -37,7 +37,7 @@ const MovieWebSite = () => {
           index
           element={<Home handleMovieId={handleMovieId} movies={movies} />}
         />
-        <Route path="/movies" element={<Movies />} />
+        <Route path="/movies" element={<Movies handleMovieId={handleMovieId}/>} />
         <Route
           path="/movies/:id"
           element={<MovieSummery movieId={movieId} movies={movies} />}
