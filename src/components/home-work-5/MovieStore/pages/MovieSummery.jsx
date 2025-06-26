@@ -1,65 +1,65 @@
-
 import { useEffect, useState } from 'react';
-import { genres } from '../genres';
 import style from '../movieWebSite.module.scss';
-import { Link, Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-const MovieSummery = ({ movies }) => {
+import { Outlet } from 'react-router-dom';
+import { Suspense } from 'react';
 
-const [dataFetched, setDataFetched] = useState([])
-  const idParam = useParams();
-  const idParamConverted = Number(idParam.id);
-  console.log("idParam",idParam)
-  const basicUrl = `https://image.tmdb.org/t/p/w500`;
-  const srcShort = dataFetched.poster_path;
-  const fullSrc = basicUrl + srcShort;
-  const vote = Math.round(dataFetched.popularity);
-  const genresIds = dataFetched.genres;
-  console.log("genresIds",genresIds)
-  const x = [];
- 
-  for (const gen of genresIds) {
-    let y = genres.find(genr => genr.id === gen);
-    if (y) {
-      x.push(y.name);
-    }
-  }
-  const xToString = x.join(', ');
+
+
+const MovieSummery = () => {
+  const params = useParams();
+  const [infoMovie, setInfoMovie] = useState("")
+  const movieSearch = params.id
+  const URL = `https://api.themoviedb.org/3/movie/${movieSearch}?language=en-US`;
+
 
   useEffect(() => {
-    const URL = `https://api.themoviedb.org/3/movie/${idParamConverted}?language=en-US`;
     const options = {
       method: "GET",
       headers: {
         accept: "application/json",
-        Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0NjgyOWZhMWY2NzdmMjkwZmQ3NTAyNWFmOGI0N2UyMSIsIm5iZiI6MTcxOTY3MjIzNC4zMDIsInN1YiI6IjY2ODAxZGFhMjhkMzA2OTI2NzViZTZiNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.V6-Px6XK3mzZbcoyTrOmxgROWXW8xsyr0QzjUgkkxQk"
+        Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0NjgyOWZhMWY2NzdmMjkwZmQ3NTAyNWFmOGI0N2UyMSIsIm5iZiI6MTcxOTY3MjIzNC4zMDIsInN1YiI6IjY2ODAxZGFhMjhkMzA2OTI2NzViZTZiNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.V6-Px6XK3mzZbcoyTrOmxgROWXW8xsyr0QzjUgkkxQk"
       }
     }
-    fetch(URL, options)
+  
+      fetch(URL, options)
       .then(response => response.json())
-    .then(data=>setDataFetched([...data]))
-  },[idParamConverted])
+        .then(data => setInfoMovie({...data}))
+        .catch(error => console.log(error))
+
+  }, [URL])
+  
+  
+  if (infoMovie !== "") {
+    const fullSrc = `https://image.tmdb.org/t/p/w500` + infoMovie.poster_path;
+    const vote = Math.round(infoMovie.popularity);
+    const genresIds = infoMovie.genres;
+    let x = [];
+    for (const info of genresIds) x.push(info.name);
+  
+    
 
   return (
     <section className={style.detailsAll}>
-      <div className={style.detailsUp}>
+             <div className={style.detailsUp}>
         <div>
           <Link to="/">Go back</Link> <br />
           <img
             src={fullSrc}
-            alt={dataFetched.title}
-            style={{ width: '400px', objectFit:"contain" }}
+            alt={infoMovie.original_title}
+            style={{ width: '400px', objectFit: 'contain' }}
           />
         </div>
 
         <div style={{ width: '400px' }}>
-          <h2>{dataFetched.title}</h2>
+          <h2>{infoMovie.original_title}</h2> 
           <p>People vote: {vote} %</p>
           <br />
           <h2>Overview</h2>
-          <p>{dataFetched.overview}</p> <br />
+          <p>{infoMovie.overview}</p> <br />
           <h2>Genre</h2>
-          <p>{xToString}</p>
+          <p>{x.join(", ")}</p>
         </div>
       </div>
       <hr />
@@ -72,11 +72,14 @@ const [dataFetched, setDataFetched] = useState([])
           <br />
           <Link to="cast">Cast</Link>
           <br />
-
-          <Outlet />
+          <Suspense fallback={<div>Loading content....</div>}>
+          
+            <Outlet />
+            </Suspense>
         </div>
       </div>
     </section>
-  );
+  );}
 };
 export default MovieSummery;
+

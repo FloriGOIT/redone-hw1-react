@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 const Home = lazy(() => import('./pages/Home'));
@@ -9,10 +9,9 @@ const Cast = lazy(() => import('./pages/Cast'));
 const Review = lazy(() => import('./pages/Review'));
 
 const MovieWebSite = () => {
-  const [movieId, setMovieId] = useState('');
-  const handleMovieId = input => setMovieId(input);
+
   const [movies, setMovies] = useState([]);
-  console.log("movieId main", movieId)
+
   useEffect(() => {
     const url =
       'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
@@ -30,27 +29,21 @@ const MovieWebSite = () => {
       .then(data => setMovies([...data.results]))
       .catch(error => console.log('error', error));
   }, []);
+
   return (
+    <Suspense fallback={<div>Loading content...</div>}>
     <Routes>
       <Route path="/" element={<SharedLayoutMovies />}>
-        <Route
-          index
-          element={<Home handleMovieId={handleMovieId} movies={movies} />}
-        />
-        <Route path="/movies" element={<Movies handleMovieId={handleMovieId}/>} />
-        <Route
-          path="/movies/:id"
-          element={<MovieSummery movieId={movieId} movies={movies} />}
-        >
-          <Route
-            path="/movies/:id/review"
-            element={<Review movieId={movieId} />}
-          />
-          <Route path="/movies/:id/cast" element={<Cast movieId={movieId} />} />
+        <Route index element={<Home movies={movies} />}/>
+        <Route path="movies" element={<Movies/>} />
+        <Route path="movies/:id" element={<MovieSummery />}>
+          <Route path="review" element={<Review />} />
+          <Route path="cast" element={<Cast />} />
         </Route>
       </Route>
-    </Routes>
-  );
+      </Routes>
+      </Suspense>
+          );
 };
 
 export default MovieWebSite;

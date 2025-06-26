@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import style from '../movieWebSite.module.scss';
+import { Suspense } from 'react';
 
 
 const SharedLayoutMovies = () => {
@@ -14,7 +15,10 @@ const SharedLayoutMovies = () => {
         <hr />
       </nav>
 
-      <Outlet />
+          <Suspense fallback={<div>Loading content....</div>}>
+          
+            <Outlet />
+            </Suspense>
     </div>
   );
 };

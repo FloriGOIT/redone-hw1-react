@@ -1,7 +1,10 @@
 
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-const Cast = ({movieId}) => {
+const Cast = () => {
+  const params = useParams()
+  const movieId = params.id
 const [info, setInfo] = useState([])
   useEffect(() => { 
 

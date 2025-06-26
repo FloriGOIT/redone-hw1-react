@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 
-const Movies = ({handleMovieId}) => {
+
+const Movies = () => {
         const [infoArr, setInfoArr] = useState([]);
         const [searchParams, setSearchParams] = useSearchParams();
         const query = searchParams.get("query") || ""
@@ -13,7 +14,7 @@ const Movies = ({handleMovieId}) => {
       headers: {
         accept: 'application/json',
         Authorization:
-          'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0NjgyOWZhMWY2NzdmMjkwZmQ3NTAyNWFmOGI0N2UyMSIsIm5iZiI6MTcxOTY3MjIzNC4zMDIsInN1YiI6IjY2ODAxZGFhMjhkMzA2OTI2NzViZTZiNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.V6-Px6XK3mzZbcoyTrOmxgROWXW8xsyr0QzjUgkkxQk',
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0NjgyOWZhMWY2NzdmMjkwZmQ3NTAyNWFmOGI0N2UyMSIsIm5iZiI6MTcxOTY3MjIzNC4zMDIsInN1YiI6IjY2ODAxZGFhMjhkMzA2OTI2NzViZTZiNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.V6-Px6XK3mzZbcoyTrOmxgROWXW8xsyr0QzjUgkkxQk',
       },
     };
     fetch(URL, options)
@@ -47,7 +48,7 @@ const Movies = ({handleMovieId}) => {
       <div>
         <ul style={{ paddingLeft: 20 }}>
         {infoArr.map(movie => {const site = `/movies/${movie.id}`;                         
-                               return (<li key={site} onClick={()=>handleMovieId(movie.id)}><Link to={site}>{movie.title}</Link></li>)})}
+                               return (<li key={site}><Link to={site}>{movie.title}</Link></li>)})}
         </ul>
       </div>
     </div>
@@ -55,3 +56,4 @@ const Movies = ({handleMovieId}) => {
 };
 
 export default Movies;
+
