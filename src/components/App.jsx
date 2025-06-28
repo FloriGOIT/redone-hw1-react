@@ -1,17 +1,11 @@
-
-
-
-import AppMovieStore from "./home-work-5/AppMovieStore";
-//import { AppStore } from "./test/Test4/AppStore";         <AppStore/>
+import { Provider } from 'react-redux';
+import AppReduxTasks from './AppReduxTasks';
+import store from './Home-work-6/redux/store';
 
 function App() {
-
-
   return (
     <>
       <h1>React homework redone</h1>
-
-
       <div
         style={{
           borderWidth: 3,
@@ -19,14 +13,12 @@ function App() {
           borderStyle: 'solid',
           padding: 15,
         }}
-      > 
-        <AppMovieStore/>
-        <hr />
-        <br />
-
+      >
+        <Provider store={store}>
+          <AppReduxTasks />
+        </Provider>
       </div>
     </>
   );
 }
 export default App;
-

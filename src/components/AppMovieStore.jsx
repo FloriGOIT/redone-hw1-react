@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import MovieWebSite from './MovieStore/MovieWebSite';
+import MovieWebSite from './home-work-5/MovieStore/MovieWebSite';
 
 const AppMovieStore = () => {
   return (
