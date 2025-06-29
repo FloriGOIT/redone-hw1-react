@@ -1,8 +1,39 @@
-.appReduxTasks{width: 600px; background-color: beige; padding: 20px; border: 1px solid rgb(112, 11, 11);
-        .headerTasksApp {
+.appReduxTasks {
+  width: 600px;
+  background-color: beige;
+  padding: 20px;
+  border: 1px solid rgb(112, 11, 11);
+  .headerTasksApp {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .tasks formInput {
+    width: 600px;
+  }
+  .listTasks {
+    list-style-type: none;
+    li {
+        .textTask {
                         display: flex;
-                        flex-direction: row; 
-                        justify-content: space-between;}
+                        flex-direction: row; gap:10px;
+                        align-items: center;         }
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
 
+  }
 }
-.filterBtn{background-color: rgb(112, 112, 233);}
+
+.selected {
+  background-color: hsl(240, 83%, 49%);
+  color: white;
+  margin-left: 15px;
+  font-size: 20px;
+}
+.filtering {
+  background-color: rgb(185, 185, 228);
+  margin-left: 15px;
+  font-size: 20px;
+}

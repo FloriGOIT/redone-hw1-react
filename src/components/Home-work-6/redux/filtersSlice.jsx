@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, } from "@reduxjs/toolkit"
 
 const typesOfTasks = {
         all: "all",
@@ -6,8 +6,7 @@ const typesOfTasks = {
         active:"active"
 }
 
-const initialFilter = {status: typesOfTasks.all}
-
+const initialFilter = { status: typesOfTasks.all }
 const filterSlice = createSlice({
         name: "filters",
         initialState: initialFilter,
