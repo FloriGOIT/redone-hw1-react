@@ -1,6 +1,8 @@
 import { Provider } from 'react-redux';
 import AppReduxTasks from './AppReduxTasks';
-import store from './Home-work-6/redux/store';
+import store from './Home-work-6/AppReduxTasks/redux/store';
+import AppReduxAgenda from './AppReduxAgenda';
+import storeAgenda from './Home-work-6/AppReduxAgenda/redux/store';
 
 function App() {
   return (
@@ -14,6 +16,12 @@ function App() {
           padding: 15,
         }}
       >
+        <Provider store={storeAgenda}>
+          <AppReduxAgenda />
+        </Provider>
+
+        <br />
+        <br />
         <Provider store={store}>
           <AppReduxTasks />
         </Provider>

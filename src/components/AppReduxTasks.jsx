@@ -1,8 +1,8 @@
-import Counter from './Home-work-6/components/Counter';
-import NavTasks from './Home-work-6/components/NavTasks';
-import style from './Home-work-6/components/appReduxTasks.module.scss';
-import AddTask from "./Home-work-6/components/AddTask";
-import ListTasks from "./Home-work-6/components/ListTasks";
+import Counter from './Home-work-6/AppReduxTasks/components/Counter';
+import NavTasks from './Home-work-6/AppReduxTasks/components/NavTasks';
+import style from './Home-work-6/AppReduxTasks/components/appReduxTasks.module.scss';
+import AddTask from "./Home-work-6/AppReduxTasks/components/AddTask";
+import ListTasks from "./Home-work-6/AppReduxTasks/components/ListTasks";
 
 const AppReduxTasks = () => {
   return (
