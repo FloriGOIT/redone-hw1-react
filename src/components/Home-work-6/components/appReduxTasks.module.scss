@@ -1,5 +1,4 @@
 .appReduxTasks {
-  width: 600px;
   background-color: beige;
   padding: 20px;
   border: 1px solid rgb(112, 11, 11);
@@ -8,9 +7,7 @@
     flex-direction: row;
     justify-content: space-between;
   }
-  .tasks formInput {
-    width: 600px;
-  }
+
   .listTasks {
     list-style-type: none;
     li {

@@ -3,10 +3,10 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { filteringTask } from "../redux/filtersSlice";
 
-const MainTasks = () => {
-        const filter = useSelector(state => state.filter.status);
+const NavTasks = () => {
+        const filter = useSelector(state => state.filter);
         const dispatch = useDispatch();
-        const handleBtn = event => { const selected = event.target.name; dispatch(filteringTask(selected))}
+        const handleBtn = event => {dispatch(filteringTask(event.target.name))}
 
         return (
                 <div className={style.mainTasks}>
@@ -17,4 +17,4 @@ const MainTasks = () => {
         )
 }
 
-export default MainTasks
+export default NavTasks
