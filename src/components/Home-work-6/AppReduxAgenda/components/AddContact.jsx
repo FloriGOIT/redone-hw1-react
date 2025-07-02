@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { addNewContact } from '../redux/contactsSlice';
 import style from './apReduxAgenda.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from 'nanoid';
 
 const AddContact = () => {
   const [success, setSuccess] = useState(false);
@@ -12,19 +13,20 @@ const AddContact = () => {
     const form = e.currentTarget.elements;
     const nameInput = form.fullName.value.trim();
     const phoneInput = form.phone.value.trim();
+    const phoneInputRegEx = phoneInput.match(/\d+/g).join('');
     const error = contacts.find(
       contact =>
         contact.name.toLowerCase() === nameInput.toLowerCase() ||
-        contact.number.toLowerCase() === phoneInput.toLowerCase()
+        contact.numberRE === phoneInput.match(/\d+/g).join('')
     );
     if (error) {
       alert('Duplicated contact');
       return;
     }
     setSuccess(true);
-    const phoneInputRegEx = phoneInput.match(/\d+/g).join('');
     const newContact = {
-      id: phoneInputRegEx,
+      id: nanoid(),
+      numberRE: phoneInputRegEx,
       number: phoneInput,
       name: nameInput,
     };
