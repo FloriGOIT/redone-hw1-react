@@ -12,7 +12,6 @@ const CountContacts = () => {
         })
         
         const contactsState = useSelector(state => state.agendaRedux);
-        console.log("contactsState", contactsState)
 
         return (
                 <div className={style.countContacts}>

@@ -22,7 +22,6 @@ const contactsSlice = createSlice({
         updatedTask.number = action.payload.number;
         updatedTask.numberRE = action.payload.number.match(/\d+/g).join('');
       }
-      console.log('updatedTask', updatedTask);
       localStorage.setItem('reduxContacts', JSON.stringify(state));
     },
   },

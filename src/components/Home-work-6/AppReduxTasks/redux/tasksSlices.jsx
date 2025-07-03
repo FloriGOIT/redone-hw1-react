@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 let arr = localStorage.getItem('arrTasks');
-console.log('arr', arr);
 const tasksInitialState = JSON.parse(arr) || [];
 
 const tasksSlice = createSlice({
