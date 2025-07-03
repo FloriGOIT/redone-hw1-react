@@ -26,7 +26,7 @@ const contactsSlice = createSlice({
       localStorage.setItem('reduxContacts', JSON.stringify(state));
     },
   },
-}); //updatedTask = { id: action.payload.id,numberRE:action.payload.number.match(/\d+/g).join(""), number: action.payload.number, name: action.payload.name }
+}); 
 
 export const {addNewContact, deleteContact, editContact } =
   contactsSlice.actions;

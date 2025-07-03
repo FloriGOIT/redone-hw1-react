@@ -10,43 +10,18 @@ const ListTheContacs = () => {
   const [updateContact, setUpdateContact] = useState('');
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.agendaRedux);
-  const filter = useSelector(state => state.filterAgendaRedux.filter);
-  const a = [
-    {
-      id: 'AmaDYV0A_5ckKM8OCvEu8',
-      numberRE: '0747643648',
-      number: '0747.643.648',
-      name: 'Flori Vachente',
-    },
-
-    {
-      id: 'Q7B-FEr91AwrdfJn9VVM1',
-      numberRE: '40755141215',
-      number: '+407-55-14-12-15',
-      name: 'Cornelia Vachente',
-    },
-
-    {
-      id: 'uHv22r7oIm-XtCLJNsNUX',
-      numberRE: '407020202',
-      number: '+407-02.02.02',
-      name: 'Iorga Ana Maria',
-    },
-  ];
-
-  const filteredContacts = a.filter(contact =>
-    contact.name.toLowerCase().includes("flo".toLowerCase())
+  const filter = useSelector(state => state.filterAgendaRedux);
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter)
   );
-  console.log("a",a)
-  const finalArr = filter ? contacts : filteredContacts;
-  console.log('contacts', contacts);
-  console.log('finalArr', finalArr);
+  console.log("filteredContacts", filteredContacts)
+
+  const finalArr = filter!=="" ? filteredContacts: contacts;
+
   useEffect(() => {
-    if (isEdit) {
-      const foundContact = contacts.find(contact => contact.id === idState);
-      setUpdateContact(foundContact);
-    }
-  }, [isEdit, idState, contacts]);
+    const foundContact = contacts.find(contact => contact.id === idState);
+    if (foundContact) setUpdateContact(foundContact);
+  }, [idState, contacts]);
 
   const handleUpdateContact = (event, contactId) => {
     event.preventDefault();
@@ -67,6 +42,8 @@ const ListTheContacs = () => {
             type="text"
             name="newName"
             value={updateContact.name || ''}
+            pattern="[A-Za-z]{2,}[A-Za-z\-\s]+"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan."
             placeholder="Adjust name..."
             onChange={e =>
               setUpdateContact(prev => ({ ...prev, name: e.target.value }))
@@ -77,6 +54,8 @@ const ListTheContacs = () => {
             name="newPhone"
             placeholder="Adjust phone number..."
             value={updateContact.number || ''}
+                      pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             onChange={e =>
               setUpdateContact(prev => ({ ...prev, number: e.target.value }))
             }
@@ -90,7 +69,7 @@ const ListTheContacs = () => {
           </button>
         </form>
       )}
-      {contacts.map((contact, index) => (
+      {finalArr.map((contact, index) => (
         <div key={contact.id}>
           {!isEdit && (
             <button
