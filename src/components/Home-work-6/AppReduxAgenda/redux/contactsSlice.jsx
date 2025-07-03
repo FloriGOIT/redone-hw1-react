@@ -6,6 +6,7 @@ const contactsSlice = createSlice({
   name: 'contacts',
   initialState: JSON.parse(contactsLocal) || [],
   reducers: {
+
     addNewContact: (state, action) => {
       state.push(action.payload);
       localStorage.setItem('reduxContacts', JSON.stringify(state));
@@ -27,6 +28,6 @@ const contactsSlice = createSlice({
   },
 }); //updatedTask = { id: action.payload.id,numberRE:action.payload.number.match(/\d+/g).join(""), number: action.payload.number, name: action.payload.name }
 
-export const { addNewContact, deleteContact, editContact } =
+export const {addNewContact, deleteContact, editContact } =
   contactsSlice.actions;
 export const contactsSliceReducer = contactsSlice.reducer;
