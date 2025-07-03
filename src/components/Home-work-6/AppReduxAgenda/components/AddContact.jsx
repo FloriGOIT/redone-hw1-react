@@ -44,6 +44,7 @@ const AddContact = () => {
           Contact was added successfully!!!
         </p>
       )}
+
       <form onSubmit={handleNewContact}>
         <label htmlFor="fullNameid"> Add full name: </label>
         <input
@@ -67,6 +68,7 @@ const AddContact = () => {
         <br />
         <button type="submit">Save</button>
       </form>
+      
     </div>
   );
 };

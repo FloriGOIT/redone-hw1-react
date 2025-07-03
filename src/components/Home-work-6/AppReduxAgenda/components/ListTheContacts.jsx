@@ -14,7 +14,7 @@ const ListTheContacs = () => {
   const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter)
   );
-  console.log("filteredContacts", filteredContacts)
+
 
   const finalArr = filter!=="" ? filteredContacts: contacts;
 
@@ -28,16 +28,20 @@ const ListTheContacs = () => {
     const form = event.currentTarget.elements;
     const newName = form.newName.value.trim();
     const newPhone = form.newPhone.value.trim();
-    dispatch(editContact({ id: contactId, number: newPhone, name: newName }));
+    dispatch(editContact({ id: contactId, number: newPhone, name: newName}));
     setIsEdit(false);
   };
   return (
     <div className={style.listTheContacts}>
+
+
       <h3>Search agenda:</h3>
       <SearcContacts />
+
+      
       {isEdit && (
         <form onSubmit={e => handleUpdateContact(e, idState)}>
-          <button>Save</button>
+          <button type="submit">Save</button>
           <input
             type="text"
             name="newName"
@@ -69,8 +73,10 @@ const ListTheContacs = () => {
           </button>
         </form>
       )}
+
       {finalArr.map((contact, index) => (
         <div key={contact.id}>
+
           {!isEdit && (
             <button
               onClick={() => {
